@@ -1,7 +1,24 @@
 version: "3.6"
 services:
-  web1.local:
-    build: .
+  web1.umcstlab.net:
+    build: ./c2-docker
+    tty: true
+    restart: always
+    entrypoint: /bin/bash
+    networks:
+      - bridge_net
+  web2.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+  web3.umcstlab.net:
+    build: ./lab-docker
     restart: always
     cap_add:
       - SYS_ADMIN # for SystemD
@@ -16,8 +33,8 @@ networks:
     driver_opts:
       parent: wlp59s0
       foo: 1
-      ip-range: 192.168.0.192/27
+      ip-range: 192.168.1.192/27
     ipam:
       driver: default
       config:
-        - subnet: 192.168.0.0/24
+        - subnet: 192.168.1.0/24
