@@ -1,0 +1,25 @@
+#!/usr/sbin/nft -f
+flush ruleset;
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0; policy drop;
+        iifname "lo" accept;
+	iifname "enp9s0" accept;
+
+        ct state { established, related } accept;
+        
+        #allow ping
+        ip protocol icmp accept;
+    }
+    
+    chain output {
+        type filter hook output priority 0; policy accept;
+        ct state invalid drop;
+    }
+
+    chain forward {
+        type filter hook forward priority 0; policy accept;
+    }
+}
+
