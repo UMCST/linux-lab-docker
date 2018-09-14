@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3.4"
 services:
   web1.umcstlab.net:
     build: ./c2-docker
@@ -17,6 +17,9 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
     networks:
       - bridge_net
+    tmpfs:
+      - /run
+      - /run/lock
   web3.umcstlab.net:
     build: ./lab-docker
     restart: always
@@ -27,14 +30,17 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
     networks:
       - bridge_net
+    tmpfs:
+      - /run
+      - /run/lock
 networks:
   bridge_net:
-    driver: ipvlan
+    driver: macvlan
     driver_opts:
-      parent: wlp59s0
+      parent: enp9s0
       foo: 1
-      ip-range: 192.168.1.192/27
+      ip-range: 192.168.10.192/27
     ipam:
       driver: default
       config:
-        - subnet: 192.168.1.0/24
+        - subnet: 192.168.10.0/24
