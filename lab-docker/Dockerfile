@@ -43,6 +43,7 @@ RUN yum update -y && yum install -y iproute \
 #For some newer software
 RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm \
   && yum install -y python36u nginx \
+  && mkdir -p /var/www/html \
   && systemctl enable nginx \
   && systemctl enable sshd \
   && systemctl enable ntpd \
