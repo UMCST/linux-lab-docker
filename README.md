@@ -1,11 +1,11 @@
-# UMCST's Into To Linux Security Lab
+# UMCST's Intro To Linux Security Lab
 
 The [University of Maine Cybersecurity Club](https://umcst.maine.edu) runs introductory labs for
 new recruits every fall. This repository contains the technical portion
 of the "Intro to Linux Security" lab. The lab has participants work to
 fix a Linux server that has been compromised by a malicious actor. Once they
 have restored the server, they then work to figure out what backdoors and remote
-access the attackers has placed on the system. If you are not involved with UMCST
+access the attackers has placed on the system. If you are not involved with UMCST,
 but would like to read the lab, send us an email at um.cst@maine.edu.
 
 Note: if you are going to be doing this lab in the near future

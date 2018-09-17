@@ -1,4 +1,5 @@
 # Backdoor walkthough
+
 This document goes through each of the backdoors present in
 the web servers. Each backdoor is documented here, as well as some
 basic forensic techniques that could be used to find these backdoors
@@ -242,6 +243,7 @@ Again, this could be spotted by looking at `/etc/passwd`.
 Change the `ftp` user's login shell back to the default. Run `sudo chsh -s /bin/false ftp`.
 
 ## Backdoor 7
+
 A malicious program was running that sent udp traffic to the Hacker's server
 and ran any commands that hackers wanted.
 
@@ -263,7 +265,7 @@ sent and recieved by the server. This backdoor sent out a huge amount of UDP
 traffic every few seconds. If you monitored traffic, it would definitely be
 an anomoly. To monitor traffic, use the `tcpdump` command.
 
-Also, the `/tmp` folder is used to store temporary files (like Downloads) and usually cleaned
+Also, the `/tmp` folder is used to store temporary files (like downloads) and usually cleaned
 out every few days (or on a reboot). Most of the time there is no reason for an
 executable file to be running from this directory.
 
