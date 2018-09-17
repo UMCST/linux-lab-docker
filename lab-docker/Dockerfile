@@ -37,7 +37,9 @@ RUN yum update -y && yum install -y iproute \
   cronie \
   psmisc \
   bind-utils \
-  fish
+  fish \
+  file \
+  tcpdump
 
 
 #For some newer software
