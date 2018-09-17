@@ -1,4 +1,9 @@
 #!/usr/sbin/nft -f
+
+#
+# This is an example firewall for a server that might host the lab.
+#
+
 flush ruleset;
 
 table inet filter {
