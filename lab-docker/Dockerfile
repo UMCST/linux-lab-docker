@@ -39,8 +39,8 @@ RUN yum update -y && yum install -y iproute \
   bind-utils \
   fish \
   file \
-  tcpdump
-
+  tcpdump \
+  nftables
 
 #For some newer software
 RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm \
@@ -69,8 +69,6 @@ EXPOSE 666
 EXPOSE 8080
 EXPOSE 10000
 
-# Time to break stuff!
-# break the server
 ADD ./conf/nginx.conf /etc/nginx/nginx.conf
 
 # add key to root's account (backdoor 1)
@@ -82,3 +80,4 @@ RUN chmod 600 /root/.ssh/authorized_keys
 # to enable systemd in this container we're doing some creative stuff
 # based on this article: https://developers.redhat.com/blog/2016/09/13/running-systemd-in-a-non-privileged-container/
 CMD ["/sbin/init"]
+

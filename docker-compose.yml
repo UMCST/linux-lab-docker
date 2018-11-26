@@ -1,14 +1,132 @@
-version: "2"
+version: "3.1"
 services:
   web1.umcstlab.net:
-    build: ./c2-docker
-    tty: true
+    build: ./lab-docker
     restart: always
-    entrypoint: /bin/bash
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
     networks:
-      bridge_net:
-        ipv4_address: 192.168.10.20
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
   web2.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
+  web3.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
+  web4.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
+  web5.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
+  web6.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
+  web7.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
+  web8.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
+  web9.umcstlab.net:
+    build: ./lab-docker
+    restart: always
+    cap_add:
+      - SYS_ADMIN # for SystemD
+      - NET_ADMIN # for iptables
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+    networks:
+      - bridge_net
+      - host_net
+    tmpfs:
+      - /run
+      - /run/lock
+  web10.umcstlab.net:
     build: ./lab-docker
     restart: always
     cap_add:
@@ -29,7 +147,7 @@ networks:
       parent: enp58s0f1
     ipam:
       config:
-        - subnet: 192.168.10.0/24
-          ip_range: 192.168.10.32/28
+        - subnet: 192.168.50.0/24
+          ip_range: 192.168.50.32/26
   host_net:
     driver: bridge
