@@ -1,4 +1,4 @@
-version: "2"
+version: "2.2"
 services:
   web1.umcstlab.net:
     build: ./c2-docker
@@ -14,7 +14,7 @@ services:
     cap_add:
       - SYS_ADMIN # for SystemD
       - NET_ADMIN # for iptables
-    volumes: 
+    volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
     networks:
       - bridge_net
@@ -24,9 +24,9 @@ services:
       - /run/lock
 networks:
   bridge_net:
-    driver: macvlan
+    driver: ipvlan
     driver_opts:
-      parent: enp58s0f1
+      parent: wlp59s0
     ipam:
       config:
         - subnet: 192.168.10.0/24

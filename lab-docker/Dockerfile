@@ -61,23 +61,27 @@ RUN echo "root:$(cat /dev/random | head --bytes 6)" | chpasswd
 EXPOSE 21
 EXPOSE 22
 EXPOSE 25
+EXPOSE 53/udp
 EXPOSE 80
 EXPOSE 111
 EXPOSE 123
 EXPOSE 443
 EXPOSE 666
+EXPOSE 5601
 EXPOSE 8080
+EXPOSE 9000
+EXPOSE 9200
+EXPOSE 5000/tcp
+EXPOSE 5000/udp
 EXPOSE 10000
 
-# Time to break stuff!
-# break the server
 ADD ./conf/nginx.conf /etc/nginx/nginx.conf
 
+# Time to break stuff!
 # add key to root's account (backdoor 1)
 RUN mkdir /root/.ssh && chmod 700 /root/.ssh
 ADD very_important_account.pub /root/.ssh/authorized_keys
 RUN chmod 600 /root/.ssh/authorized_keys
-
 
 # to enable systemd in this container we're doing some creative stuff
 # based on this article: https://developers.redhat.com/blog/2016/09/13/running-systemd-in-a-non-privileged-container/

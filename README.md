@@ -43,29 +43,34 @@ The general steps are below.
 1. Set a static ip for the lab host above the range for the containers.
 2. Clone this repository onto the host server.
 3. Customize the `docker-compose.yml` file with the correct ip ranges.
+   a. You may need to change the type of driver for the bridge network. If you are on wifi, then you need
+   to use a driver type of `ipvlan`. This is an experimental docker feature, so you need to enable experimental
+   mode. If you're on ethernet you're all set using `macvlan`.
+   b. Make sure that the network in `bridge` matches your actual network.
 4. Run `docker-compose build` and the `docker-compose up`
-5. Get a shell on the container `web1.umcstlab.net` and run the shell script `post_install.sh`
+5. Get a shell on the container `web1.umcstlab.net` with `docker ps` and then `docker exec`
+   and run the shell script `post_install.sh`
 6. Test that outside computers can ping the lab servers.
 
-
 ## Todo
+
 Some changes and additions to make that would improve the lab.
 
-* A DNS server for the network would be great. The docker containers manage their own DNS, but the clients connecting to them do not have that knowledge.
-* Setup networking so that the Docker containers can talk to their host system. This could be used for more backdoors.
-* Create more backdoors, like a web shell.
-* Create a scoreboard that tracks how many backdoors are remaining on each system.
-* There needs to be an easy way for lab participants to grab a new copy of the nginx.conf file.
+- A DNS server for the network would be great. The docker containers manage their own DNS, but the clients connecting to them do not have that knowledge.
+- Setup networking so that the Docker containers can talk to their host system. This could be used for more backdoors.
+- Create more backdoors, like a web shell.
+- Create a scoreboard that tracks how many backdoors are remaining on each system.
+- There needs to be an easy way for lab participants to grab a new copy of the nginx.conf file.
 
 ## Built With
 
-* [Docker](https://www.docker.com) - To create "virtual servers".
-* [pssh](https://linux.die.net/man/1/pssh) - To remotely control many servers at once.
-* [not-a-backdoor](https://github.com/Dieff/not-a-backdoor) - One of the backdoors used on lab servers.
+- [Docker](https://www.docker.com) - To create "virtual servers".
+- [pssh](https://linux.die.net/man/1/pssh) - To remotely control many servers at once.
+- [not-a-backdoor](https://github.com/Dieff/not-a-backdoor) - One of the backdoors used on lab servers.
 
 ## Authors
 
-* **Nick Dieffenbacher-Krall** - *Initial work* - [Dieff](https://github.com/Dieff)
+- **Nick Dieffenbacher-Krall** - _Initial work_ - [Dieff](https://github.com/Dieff)
 
 ## License
 
