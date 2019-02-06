@@ -24,12 +24,13 @@ services:
       - /run/lock
 networks:
   bridge_net:
-    driver: ipvlan
+    driver: macvlan
     driver_opts:
-      parent: wlp59s0
+      parent: enp58s0f1
     ipam:
       config:
         - subnet: 192.168.10.0/24
+          gateway: 192.168.10.1
           ip_range: 192.168.10.32/28
   host_net:
     driver: bridge

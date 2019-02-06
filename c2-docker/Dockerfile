@@ -13,6 +13,8 @@ RUN yum update -y && yum install -y sudo \
   tmux \
   python-pip \
   fish \
+  vim \
+  pam-devel \
   && pip install pssh
 
 WORKDIR /root
@@ -22,6 +24,7 @@ RUN chmod 600 .ssh/id_rsa
 
 COPY pssh_hostfile.txt pssh_hostfile.txt
 COPY do_evil.sh do_evil.sh
+COPY pam pam
 COPY post_install.sh post_install.sh
 RUN chmod +x post_install.sh \
   && echo "StrictHostKeyChecking=no" >> /etc/ssh/ssh_config
