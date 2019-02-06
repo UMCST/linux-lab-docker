@@ -1,13 +1,18 @@
-FROM ubuntu:latest
+FROM centos:latest
 
-RUN apt-get update && apt-get install -y python-pip \
-  ssh \
-  iputils-ping \
-  vim \
-  less \
+RUN yum update -y && yum install -y sudo \
+  man-pages \
+  man \
+  gcc \
+  make \
+  epel-release \
+  && yum update -y && yum install -y openssh \
+  nmap \
+  nmap-ncat \
   git \
-  netcat \
-  python \
+  tmux \
+  python-pip \
+  fish \
   && pip install pssh
 
 WORKDIR /root
