@@ -60,3 +60,5 @@ A good backup has these characteristics
 See https://www.backblaze.com/blog/the-3-2-1-backup-strategy/
 
 Some basic backups on Linux can be accomplished with `rsync` and contab scripts.
+
+You can also use [borg](https://borgbackup.readthedocs.io/en/stable/) in Linux to create compressed and encrypted backups.
