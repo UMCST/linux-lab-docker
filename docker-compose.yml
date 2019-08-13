@@ -7,7 +7,7 @@ services:
     entrypoint: /bin/bash
     networks:
       bridge_net:
-        ipv4_address: 192.168.10.20
+        ipv4_address: 192.168.190.164
   web2.umcstlab.net:
     build: ./lab-docker
     restart: always
@@ -22,28 +22,15 @@ services:
     tmpfs:
       - /run
       - /run/lock
-  filebeat:
-    hostname: filebeat
-    build: ./filebeat
-    volumes:
-# needed to persist filebeat tracking data :
-     - "filebeat_data:/usr/share/filebeat/data:rw"
-# needed to access all docker logs (read only) :
-     - "/var/lib/docker/containers:/usr/share/dockerlogs/data:ro"
-# needed to access additional informations about containers
-     - "/var/run/docker.sock:/var/run/docker.sock"
-volumes:
-# create a persistent volume for Filebeat
-  filebeat_data:
 networks:
   bridge_net:
     driver: macvlan
     driver_opts:
-      parent: enp58s0f1
+      parent: ens18
     ipam:
       config:
-        - subnet: 192.168.10.0/24
-          gateway: 192.168.10.1
-          ip_range: 192.168.10.32/28
+        - subnet: 192.168.190.1/24
+          gateway: 192.168.190.1
+          ip_range: 192.168.190.160/28
   host_net:
     driver: bridge
