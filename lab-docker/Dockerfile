@@ -9,6 +9,7 @@ STOPSIGNAL SIGRTMIN+3
 COPY conf/yum.conf /etc/yum.conf
 #Configure syslog fowarding
 COPY ./conf/rsyslog.conf /etc/rsyslog.d/forward.conf
+COPY ./conf/json-template.conf /etc/rsyslog.d/01-json-template.conf
 RUN yum install -y yum-plugin-fastestmirror
 
 RUN yum update -y && yum install -y iproute \
