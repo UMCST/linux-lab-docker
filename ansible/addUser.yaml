@@ -1,0 +1,59 @@
+---
+# Create User Ansible and copy SSH key
+- hosts: test
+  # remote_user: root
+  tasks:
+    - name: "CentOS install"
+      when: "ansible_distribution == 'CentOS'"
+      block:
+      - name: "add Ansible User"
+        user:
+          name: ansible
+          password: '$6$LGBIW1sp$xWfYuGiM48ZPV4F51oAlINr6Q1RvrH9sAfKHJMkhyufH00Z8DCXdwwdTdNvlnQTKzo0S1Q3mr2Fwy3ychY6A7/'
+          groups:
+           - wheel
+          append: yes
+          generate_ssh_key: yes
+          state: present
+          shell: /bin/bash
+          system: no
+          createhome: yes
+          home: /home/ansible
+    - name: "Ubuntu install"
+      when: "ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'"
+      block:
+      - name: "add Ansible User"
+        user:
+          name: ansible
+          password: '$6$LGBIW1sp$xWfYuGiM48ZPV4F51oAlINr6Q1RvrH9sAfKHJMkhyufH00Z8DCXdwwdTdNvlnQTKzo0S1Q3mr2Fwy3ychY6A7/'
+          groups:
+           - wheel
+          append: yes
+          generate_ssh_key: yes
+          state: present
+          shell: /bin/bash
+          system: no
+          createhome: yes
+          home: /home/ansible
+    - name: "Add user ansible to sudo"
+      lineinfile:
+        path: /etc/sudoers.d/ansibleuser
+        line: 'ansible ALL=(ALL) NOPASSWD: ALL'
+        state: present
+        mode: '0440'
+        create: yes
+        validate: 'visudo -cf %s'
+    - name: Create Authorized Key
+      authorized_key:
+        user: ansible
+        state: present
+        manage_dir: yes
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDM12e7JMib6gQPErqYfSZRnq/lA1akwc6GzmuM5heiul/7VB0ILSiQUL+i7ATICbp4ScFZqPqtjwUK62giij7pwY7yA2UPUbrIrFSdfGJSMXWD6EfgjDdcUA5N9L+XPIEwKHz8EUqDWFzRHTqbPbEy1X2BRuDhHxPUUFol2lmRZbxNLnhIhZQitPV7r/AI1US7KMYjyQxt96D5GIM7k/4/TVAj9kcKWpxhpnaGp7qLS72DKM3R6Pu/z+3elc2C5fo7F43R9Cavtl/hwiBH8ihhIyWoq48pULKqkWpnGzLM0tf94XtuSvj87s0+0FfonGs0HNhG7uUHS6Shz80BCJkF ansible@jump0"
+      become: yes
+    - name: Disable Root Login
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^PermitRootLogin'
+        line: "PermitRootLogin no"
+        state: present
+        backup: yes

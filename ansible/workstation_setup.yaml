@@ -1,0 +1,18 @@
+- hosts: "workstations"
+  # we will need root privilege to do installs
+  become: true
+  tasks:
+    - name: "Add cybersec User"
+        block:
+          - name: "Add user"
+          - name: "Give user sudo"
+          - name: "Add to wireshark group"
+    - name: "Update & Upgrade packages"
+        when: "ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'"
+        block:
+          - name: "update apt repo"
+            apt:
+              name: "*"
+              state: latest
+              update_cache: yes
+
