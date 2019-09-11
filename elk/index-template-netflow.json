@@ -1,0 +1,11 @@
+{
+  "settings": {},
+  "mappings": {
+    "_default_": {
+      "properties": {
+        "src_geoip.location": { "type": "geo_point" },
+        "dst_geoip.location": { "type": "geo_point" }
+      }
+    }
+  }
+}

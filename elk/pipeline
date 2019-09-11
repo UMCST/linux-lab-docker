@@ -1,0 +1,39 @@
+input {
+  udp {
+    port => 2055
+    codec => netflow
+    add_field => {
+      "input_type" => "netflow"
+    }
+  }
+  syslog {
+    port => 5514
+    add_field => {
+      "input_type" => "syslog"
+    }
+  }
+}
+
+filter {
+  if [input_type] == "netflow" {
+    geoip {
+      source => "[netflow][ipv4_src_addr]"
+      target => "src_geoip"
+    }
+    geoip {
+      source => "[netflow][ipv4_dst_addr]"
+      target => "dst_geoip"
+    }
+  }
+} 
+
+output {
+  elasticsearch {
+    hosts => "http://elasticsearch:9200"
+    user => logstash
+    password => "Communicate399government!"
+    index => "logstash-%{input_type}-%{+YYYY.MM.dd}"
+    template => "/usr/share/logstash/index-template-netflow.json" 
+    ilm_enabled => false
+  }
+}
