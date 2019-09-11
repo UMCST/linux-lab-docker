@@ -11,4 +11,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-tmux attach -rt 0
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  tmux attach -rt 0
