@@ -47,6 +47,8 @@ services:
       - odfe-net
     depends_on:
       - elasticsearch
+  coredns:
+    image: coredns/coredns
 networks:
   odfe-net:
 volumes:
