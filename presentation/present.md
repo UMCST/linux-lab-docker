@@ -9,7 +9,7 @@ patat:
 # Welcome
 
 ```sh
-ssh cybersec@linuxlab.ndieff.dev -p 2020
+ssh cybersec@linuxlab.ndieff.dev -p 222
 # password is cybersec$1
 ```
 
