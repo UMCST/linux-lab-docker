@@ -7,7 +7,9 @@ STOPSIGNAL SIGRTMIN+3
 #By default the yum.conf in docker has some stuff disabled
 #We'll use our own
 COPY conf/yum.conf /etc/yum.conf
-
+#Configure syslog fowarding
+COPY ./conf/rsyslog.conf /etc/rsyslog.d/forward.conf
+COPY ./conf/json-template.conf /etc/rsyslog.d/01-json-template.conf
 RUN yum install -y yum-plugin-fastestmirror
 
 RUN yum update -y && yum install -y iproute \
@@ -39,8 +41,8 @@ RUN yum update -y && yum install -y iproute \
   bind-utils \
   fish \
   file \
-  tcpdump
-
+  tcpdump \
+  rsyslog
 
 #For some newer software
 RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm \
@@ -50,7 +52,9 @@ RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm \
   && systemctl enable sshd \
   && systemctl enable ntpd \
   && systemctl enable rpcbind \
-  && systemctl enable vsftpd
+  && systemctl enable vsftpd 
+#RUN systemctl restart rsyslog \
+#  && systemctl enable rsyslog
 
 # add the admin user and set it up
 RUN adduser admin && echo 'admin:cybersec$1' | chpasswd && usermod -a -G wheel admin
@@ -77,7 +81,6 @@ EXPOSE 5000/udp
 EXPOSE 10000
 
 ADD ./conf/nginx.conf /etc/nginx/nginx.conf
-
 # Time to break stuff!
 # add key to root's account (backdoor 1)
 RUN mkdir /root/.ssh && chmod 700 /root/.ssh

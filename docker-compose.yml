@@ -7,7 +7,7 @@ services:
     entrypoint: /bin/bash
     networks:
       bridge_net:
-        ipv4_address: 192.168.10.20
+        ipv4_address: 192.168.190.164
   web2.umcstlab.net:
     build: ./lab-docker
     restart: always
@@ -26,11 +26,11 @@ networks:
   bridge_net:
     driver: macvlan
     driver_opts:
-      parent: enp58s0f1
+      parent: ens18
     ipam:
       config:
-        - subnet: 192.168.10.0/24
-          gateway: 192.168.10.1
-          ip_range: 192.168.10.32/28
+        - subnet: 192.168.190.1/24
+          gateway: 192.168.190.1
+          ip_range: 192.168.190.160/28
   host_net:
     driver: bridge
