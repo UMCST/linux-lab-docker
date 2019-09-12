@@ -1,14 +1,14 @@
 version: "2.2"
 services:
-  web1.umcstlab.net:
+  web_0:
     build: ./c2-docker
     tty: true
     restart: always
     entrypoint: /bin/bash
     networks:
       bridge_net:
-        ipv4_address: 192.168.190.164
-  web2.umcstlab.net:
+        ipv4_address: 192.168.50.33
+  web:
     build: ./lab-docker
     restart: always
     cap_add:
@@ -26,11 +26,11 @@ networks:
   bridge_net:
     driver: macvlan
     driver_opts:
-      parent: ens18
+      parent: eno1
     ipam:
       config:
-        - subnet: 192.168.190.1/24
-          gateway: 192.168.190.1
-          ip_range: 192.168.190.160/28
+        - subnet: 192.168.50.0/24
+          gateway: 192.168.50.1
+          ip_range: 192.168.50.32/27
   host_net:
     driver: bridge

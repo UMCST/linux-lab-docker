@@ -32,7 +32,7 @@ services:
     networks:
       - odfe-net
     ports:
-      - "5601:5601"
+      - "80:5601"
     depends_on:
       - elasticsearch
   logstash:
@@ -49,6 +49,8 @@ services:
       - elasticsearch
   coredns:
     image: coredns/coredns
+    volumes:
+      - "./coredns:/root/"
 networks:
   odfe-net:
 volumes:
