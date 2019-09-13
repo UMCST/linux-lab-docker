@@ -7,7 +7,7 @@ services:
     entrypoint: /bin/bash
     networks:
       bridge_net:
-        ipv4_address: 192.168.50.33
+        ipv4_address: 10.10.10.32
   web:
     build: ./lab-docker
     restart: always
@@ -29,8 +29,8 @@ networks:
       parent: eno1
     ipam:
       config:
-        - subnet: 192.168.50.0/24
-          gateway: 192.168.50.1
-          ip_range: 192.168.50.32/27
+        - subnet: 10.10.10.0/24
+          gateway: 10.10.10.1
+          ip_range: 10.10.10.32/27
   host_net:
     driver: bridge
