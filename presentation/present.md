@@ -77,12 +77,14 @@ It's a _Teletypewriter_
 
 - Check out your files
 ```
-$ ls
-$ ls -lah
-$ less /etc/passwd
-$ less /dev/urandom
-$ touch myfile.txt
-$ rm myfile.txt
+> ls
+> ls -lah
+> less /etc/passwd
+> less /dev/urandom
+> touch myfile.txt
+> echo "hello" > myfile.txt
+> cat myfile.txt
+> rm myfile.txt
 ```
 
 # Linux Security - Users
@@ -91,9 +93,16 @@ $ rm myfile.txt
 
 - Now many user accounts are programs/services instead
 
-- The root user is God
+- If the root user is God, `sudo` is Jesus
 
 - Keep track of who's online
+
+```
+> w
+> last
+> getent passwd
+> sudo cat /etc/shadow
+```
 
 # Linux Security - Services
 
@@ -104,8 +113,18 @@ $ rm myfile.txt
 - Some services listen on ports
 
 ```sh
-$ ss -tulpn # who's listening?
+ss -tulpn # who's listening?
 ```
+* ftp: 21/tcp
+* ssh: 22/tcp
+* dns: 53/udp
+* web: 80/tcp
 
 # Good Luck!
 
+To get started...
+
+```sh
+> ssh admin@<my_server>
+# password is cybersec$1
+```
