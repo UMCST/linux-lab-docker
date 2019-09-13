@@ -5,7 +5,7 @@
 }
 
 umcstlab.net:53 {
-    file /root/umcstlab.db
+    file /root/db.umcstlab.net
     log
     errors
 }

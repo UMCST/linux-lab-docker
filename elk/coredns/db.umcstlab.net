@@ -1,0 +1,30 @@
+$TTL    1800
+$ORIGIN    umcstlab.net.
+@     1800 IN    SOA   dns.umcstlab.net docker.umcstlab.net. (
+                  1  ; Serial
+                  1800         ; Refresh
+                  900         ; Retry
+                  1800         ; Expire
+                  1800 )       ; Negative Cache TTL
+@    1800 IN    NS    dns.umcstlab.net.
+@    1800 IN    A    192.168.50.5
+docker    IN    A    192.168.50.5
+dns    IN  A   192.168.50.29
+elastic    IN A   192.168.50.29
+web0    IN  A   192.168.50.32
+web1    IN  A   192.168.50.33
+web2    IN  A   192.168.50.34
+web3    IN  A   192.168.50.35
+web4    IN  A   192.168.50.36
+web5    IN  A   192.168.50.37
+web6    IN  A   192.168.50.38
+web7    IN  A   192.168.50.39
+web8    IN  A   192.168.50.40
+web9    IN  A   192.168.50.41
+web1    IN  A   192.168.50.42
+web11    IN  A   192.168.50.43
+web12    IN  A   192.168.50.44
+web13    IN  A   192.168.50.45
+web14    IN  A   192.168.50.46
+web15    IN  A   192.168.50.47
+
