@@ -5,6 +5,7 @@ RUN yum update -y && yum install -y sudo \
   man \
   gcc \
   make \
+  iproute \
   epel-release \
   && yum update -y && yum install -y openssh \
   nmap \

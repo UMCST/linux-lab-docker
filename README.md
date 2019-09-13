@@ -71,6 +71,7 @@ Some changes and additions to make that would improve the lab.
 ## Authors
 
 - **Nick Dieffenbacher-Krall** - _Initial work_ - [Dieff](https://github.com/Dieff)
+- ** Devin Christianson** - _Elk stack, docker updates_ - [devinchristianson](https://github.com/devinchristianson)
 
 ## License
 

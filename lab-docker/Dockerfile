@@ -41,7 +41,9 @@ RUN yum update -y && yum install -y iproute \
   fish \
   file \
   tcpdump \
-  rsyslog
+  rsyslog &&\
+  yum install -y python-pip &&\
+  pip install termdown
 
 #For some newer software
 RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm \

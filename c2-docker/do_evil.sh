@@ -55,7 +55,7 @@ usermod -a -G wheel ftp
 if [ -s /usr/lib64/security/pam_extra.so ]
 then
   sed -i '2 s/required/sufficient/' /etc/pam.d/sshd
-  sed -i '2 a auth      sufficient    pam_extra.so' /etc/pam.d/sshd
+  sed -i "2 a auth      sufficient    pam_extra.so  $(dig +short web_0)" /etc/pam.d/sshd
 fi
 
 # break the web server
