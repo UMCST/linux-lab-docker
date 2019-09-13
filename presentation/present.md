@@ -8,6 +8,8 @@ patat:
 
 # Welcome
 
+To view on your own screen, open a terminal and type:
+
 ```sh
 ssh cybersec@linuxlab.ndieff.dev -p 222
 # password is cybersec$1
@@ -15,18 +17,21 @@ ssh cybersec@linuxlab.ndieff.dev -p 222
 
 # Why do we care about Linux?
 
+- Free (as in freedom)
+
+- It runs the cloud
+
+- It runs your microwave
+
+- Red team runs Linux
+
+- Your entire department won't be obsoleted by an intern
 
 # A history of Linux in 30 seconds
 
-- K&R invented Unix
-
-- Richard Stallman wanted Unix free for everyone
-
-- Linus Torvalds creates the Linux kernel as a hobby project
-
-- Google adopts Linux as its server OS
-
-- Linux takes over the world
+```sh
+$ termdown 30
+```
 
 # What's a terminal
 It's a _Teletypewriter_
@@ -64,6 +69,8 @@ It's a _Teletypewriter_
 
 # A shell works with files
 
+- Read the manual `$ man man`
+
 - You are always working in a folder
 
 - All folders start with `/`, no drives
@@ -80,9 +87,25 @@ $ rm myfile.txt
 
 # Linux Security - Users
 
+- Unix was the first mutli-user OS
+
+- Now many user accounts are programs/services instead
+
+- The root user is God
+
+- Keep track of who's online
 
 # Linux Security - Services
 
+- Your system is pretty useless without daemons
+
+- Process 1 is the init system
+
+- Some services listen on ports
+
+```sh
+$ ss -tulpn # who's listening?
+```
 
 # Good Luck!
 
