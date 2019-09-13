@@ -1,0 +1,5 @@
+#!/bin/bash
+ip link add shim link eno1 type macvlan mode bridge
+ip addr add 10.10.10.6/32 dev shim
+ip link set shim up
+ip route add 10.10.10.32/27 dev shim
