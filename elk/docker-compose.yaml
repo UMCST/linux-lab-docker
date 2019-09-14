@@ -55,6 +55,13 @@ services:
     volumes:
       - "./coredns:/root"
     command: ['-conf', '/root/Corefile']
+  files:
+    image: nginx:latest
+    volumes: 
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./files:/opt/nginx/public
+    ports:
+      - "8080:80"
 networks:
   odfe-net:
 volumes:
