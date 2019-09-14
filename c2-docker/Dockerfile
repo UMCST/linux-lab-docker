@@ -6,6 +6,7 @@ RUN yum update -y && yum install -y sudo \
   gcc \
   make \
   iproute \
+  tcpdump \
   epel-release \
   && yum update -y && yum install -y openssh \
   nmap \
