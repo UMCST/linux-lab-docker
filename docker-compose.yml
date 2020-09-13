@@ -18,19 +18,14 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
     networks:
       - bridge_net
-      - host_net
     tmpfs:
       - /run
       - /run/lock
+  file:
+    build: ./file-server
+    ports:
+      - "80:80"
+    volumes:
+      - ./file-server/files/:/usr/share/nginx/html
 networks:
   bridge_net:
-    driver: macvlan
-    driver_opts:
-      parent: eno1
-    ipam:
-      config:
-        - subnet: 192.168.50.0/24
-          gateway: 192.168.50.1
-          ip_range: 192.168.50.32/27
-  host_net:
-    driver: bridge
