@@ -20,8 +20,6 @@ services:
       - /run/lock
   file:
     build: ./file-server
-    ports:
-      - "80:80"
     volumes:
       - ./file-server/files/:/usr/share/nginx/html
 networks:
