@@ -1,6 +1,6 @@
 version: "2.1"
 services:
-  web_0:
+  web0:
     build: ./c2-docker
     tty: true
     restart: always
