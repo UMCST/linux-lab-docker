@@ -1,6 +1,6 @@
-FROM centos:latest
-
-RUN yum update -y && yum install -y sudo \
+FROM centos:centos7
+RUN yum update -y && yum install -y epel-release
+RUN yum install -y sudo \
   man-pages \
   man \
   gcc \

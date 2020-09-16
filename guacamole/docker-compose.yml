@@ -3,6 +3,9 @@ version: "3.7"
 services:
     guacd:
         image: guacamole/guacd
+        networks:
+          - bridge_net
+          - guac_net
     guac-server:
         image: guacamole/guacamole
         ports:
@@ -12,6 +15,8 @@ services:
           - "postgres"
         env_file:
           - guac.env
+        networks:
+          - guac_net
     postgres:
         image: postgres:latest
         volumes:
@@ -22,6 +27,11 @@ services:
           - pgsql.env
         environment:
           - PGDATA=/var/lib/postgresql/data/pgdata
+        networks:
+          - guac_net
 volumes:
     pgdata:
-
+networks:
+    bridge_net:
+      external: true
+    guac_net:

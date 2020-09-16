@@ -1,4 +1,4 @@
-FROM centos:latest
+FROM centos:centos7
 ENV container docker
 
 #SystemD needs a special signal to stop correctly
@@ -9,9 +9,9 @@ STOPSIGNAL SIGRTMIN+3
 COPY conf/yum.conf /etc/yum.conf
 #Configure syslog fowarding
 COPY ./conf/rsyslog.conf /etc/rsyslog.d/forward.conf
-RUN yum install -y yum-plugin-fastestmirror
 
-RUN yum update -y && yum install -y iproute \
+RUN yum update -y && yum install -y epel-release
+RUN yum install -y iproute \
   sudo \
   man-pages \
   man \
@@ -41,13 +41,10 @@ RUN yum update -y && yum install -y iproute \
   fish \
   file \
   tcpdump \
-  rsyslog &&\
-  yum install -y python-pip &&\
-  pip install termdown
+  rsyslog
 
 #For some newer software
-RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm \
-  && yum install -y python36u nginx \
+RUN yum install -y nginx \
   && mkdir -p /var/www/html \
   && systemctl enable nginx \
   && systemctl enable sshd \
