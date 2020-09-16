@@ -5,9 +5,6 @@ services:
     tty: true
     restart: always
     entrypoint: /bin/bash
-    networks:
-      bridge_net:
-        ipv4_address: 192.168.50.32
   web:
     build: ./lab-docker
     restart: always
