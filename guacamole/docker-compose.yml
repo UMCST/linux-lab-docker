@@ -32,6 +32,6 @@ services:
 volumes:
     pgdata:
 networks:
-    bridge_net:
+    linuxlab_bridge_net:
       external: true
     guac_net:
