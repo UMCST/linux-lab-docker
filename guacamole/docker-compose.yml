@@ -4,7 +4,7 @@ services:
     guacd:
         image: guacamole/guacd
         networks:
-          - bridge_net
+          - linuxlab_bridge_net
           - guac_net
     guac-server:
         image: guacamole/guacamole
