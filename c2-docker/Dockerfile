@@ -30,3 +30,10 @@ COPY pam pam
 COPY post_install.sh post_install.sh
 RUN chmod +x post_install.sh \
   && echo "StrictHostKeyChecking=no" >> /etc/ssh/ssh_config
+RUN yum install -y openssh-server
+EXPOSE 22
+RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
+    ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa && \
+    ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa -b 521 && \
+    ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]

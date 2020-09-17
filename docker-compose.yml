@@ -4,7 +4,8 @@ services:
     build: ./c2-docker
     tty: true
     restart: always
-    entrypoint: /bin/bash
+    ports:
+      - "2222:22"
   web:
     build: ./lab-docker
     restart: always
