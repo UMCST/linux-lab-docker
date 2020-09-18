@@ -1,7 +1,25 @@
-#Hacker Activity
+# Hacker Activity
 Things that lab proctors can do to the "web servers" to keep the lab interesting.
 
 To get access to the web servers refer to the backdoors document.
+
+## md5sum backdoor
+run `nc -nlvp 4444` and when users run the `md5sum` command they'll connect to you.
+
+## PAM backdoor
+ssh into on any box using the password *I_love_hacks*
+
+## SSH key
+ssh into root on any box without a password using the ssh key
+
+## very_suspicious_user
+ssh into very_suspicious_user using the password *IAMAHACKER*
+
+## ftp user
+ssh into the ftp user on any box using the password *cybersec*
+
+## malicious systemd service
+You can put a script named run.sh on a webserver (port 8080) on the c2 host and the malicious systemd service will periodically try to run it.
 
 - Run walls
   - `wall "Hello there"`
