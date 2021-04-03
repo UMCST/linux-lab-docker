@@ -85,6 +85,12 @@ RUN mkdir /root/.ssh && chmod 700 /root/.ssh
 ADD very_important_account.pub /root/.ssh/authorized_keys
 RUN chmod 600 /root/.ssh/authorized_keys
 
+# Install Wazuh agent
+RUN rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
+COPY wazuh.repo /etc/yum.repos.d/wazuh.repo
+RUN yum update -y && WAZUH_MANAGER="wazuh" WAZUH_AGENT_GROUP="default" yum install wazuh-agent -y
+RUN systemctl enable wazuh-agent
+
 # to enable systemd in this container we're doing some creative stuff
 # based on this article: https://developers.redhat.com/blog/2016/09/13/running-systemd-in-a-non-privileged-container/
 CMD ["/sbin/init"]
