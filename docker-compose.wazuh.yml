@@ -1,0 +1,80 @@
+version: "3.7"
+
+services:
+  wazuh:
+    image: wazuh/wazuh-odfe:4.1.4
+    hostname: wazuh
+    restart: always
+    environment:
+      - ELASTICSEARCH_URL=https://elasticsearch:9200
+      - ELASTIC_USERNAME=admin
+      - ELASTIC_PASSWORD=admin
+      - FILEBEAT_SSL_VERIFICATION_MODE=none
+    volumes:
+      - ossec_api_configuration:/var/ossec/api/configuration
+      - ossec_etc:/var/ossec/etc
+      - ossec_logs:/var/ossec/logs
+      - ossec_queue:/var/ossec/queue
+      - ossec_var_multigroups:/var/ossec/var/multigroups
+      - ossec_integrations:/var/ossec/integrations
+      - ossec_active_response:/var/ossec/active-response/bin
+      - ossec_agentless:/var/ossec/agentless
+      - ossec_wodles:/var/ossec/wodles
+      - filebeat_etc:/etc/filebeat
+      - filebeat_var:/var/lib/filebeat
+    networks:
+      - web
+      - srv
+  elasticsearch:
+    image: amazon/opendistro-for-elasticsearch:1.12.0
+    hostname: elasticsearch
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - cluster.name=wazuh-cluster
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    networks:
+      - srv
+  kibana:
+    image: wazuh/wazuh-kibana-odfe:4.1.4
+    hostname: kibana
+    restart: always
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_USERNAME=admin
+      - ELASTICSEARCH_PASSWORD=admin
+      - SERVER_SSL_ENABLED=true
+      - SERVER_SSL_CERTIFICATE=/usr/share/kibana/config/opendistroforelasticsearch.example.org.cert
+      - SERVER_SSL_KEY=/usr/share/kibana/config/opendistroforelasticsearch.example.org.key
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.birdspotter.rule=Host(`${DOMAIN}`)"
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch:elasticsearch
+      - wazuh:wazuh
+    networks:
+      - srv
+volumes:
+  ossec_api_configuration:
+  ossec_etc:
+  ossec_logs:
+  ossec_queue:
+  ossec_var_multigroups:
+  ossec_integrations:
+  ossec_active_response:
+  ossec_agentless:
+  ossec_wodles:
+  filebeat_etc:
+  filebeat_var:
