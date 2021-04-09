@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  guacd:
+    image: guacamole/guacd
+    networks:
+      - srv
+      - web
+  guac-server:
+    image: guacamole/guacamole
+    ports:
+      - "80:8080"
+    depends_on:
+      - "guacd"
+      - "postgres"
+    env_file:
+      - .env
+    networks:
+      - srv
+  postgres:
+    image: postgres:latest
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./guac-db.sql:/docker-entrypoint-initdb.d/guac-db.sql
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    networks:
+      - srv
+volumes:
+    pgdata:

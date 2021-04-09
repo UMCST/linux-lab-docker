@@ -1,13 +1,13 @@
-version: "2.2"
+version: "2.1"
 services:
-  web_0:
+  web0:
     build: ./c2-docker
     tty: true
     restart: always
-    entrypoint: /bin/bash
+    ports:
+      - "2222:22"
     networks:
-      bridge_net:
-        ipv4_address: 192.168.50.32
+      - web
   web:
     build: ./lab-docker
     restart: always
@@ -16,21 +16,18 @@ services:
       - NET_ADMIN # for iptables
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
-    networks:
-      - bridge_net
-      - host_net
     tmpfs:
       - /run
       - /run/lock
+    networks:
+      - web
+  file-server:
+    build: ./file-server
+    hostname: file-server
+    volumes:
+      - ./file-server/files/:/usr/share/nginx/html
+    networks:
+      - web
 networks:
-  bridge_net:
-    driver: macvlan
-    driver_opts:
-      parent: eno1
-    ipam:
-      config:
-        - subnet: 192.168.50.0/24
-          gateway: 192.168.50.1
-          ip_range: 192.168.50.32/27
-  host_net:
-    driver: bridge
+  web:
+  srv:
