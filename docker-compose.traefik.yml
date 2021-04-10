@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  guac-server:
+    labels:
+      - "traefik.http.routers.guac.rule=Host(`console.{$DOMAIN}`)"
+      - "traefik.http.routers.guac.entrypoints=websecure"
+      - "traefik.http.routers.guac.tls=true"
+      - "traefik.http.routers.guac.middlewares=redirct-guac"
+  wazuh:
+    labels:
+      - "traefik.http.routers.guac.rule=Host(`wazuh.{$DOMAIN}`)"
+      - "traefik.http.routers.guac.entrypoints=websecure"
+      - "traefik.http.routers.guac.tls=true"
+  traefik:
+    ports:
+      - 80:80
+      - 443:443
+    command:
+        # define healthcheck
+      - "--ping.entryPoint=ping"
+      - "--entryPoints.ping.address=:8082"
+        # security & provider config
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+        # define routers for http and https
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+        # define permanent redirect to https
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+    labels:
+      - "traefik.http.middlewares.redirect-guac.addPrefix.prefix=/guacamole
