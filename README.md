@@ -40,22 +40,21 @@ via macvlan (or ipvlan if you are using wifi).
 
 The general steps are below.
 
-1. Set a static ip for the lab host above the range for the containers.
-2. Clone this repository onto the host server.
-3. If you don't want to use Guacamole and access the web servers directly, modify the `docker-compose.yml` file with the correct ip ranges and network drivers.
+1. Clone this repository onto the host server.
+2. If you don't want to use Guacamole and access the web servers directly, modify the `docker-compose.yml` file with the correct ip ranges and network drivers.
    a. For a wired connection, use the `macvlan` driver, and set the docker-compose IPAM settings to use a suitable network range.
    b. If you are on wifi, then you need to use a driver type of `ipvlan`. This is an experimental docker feature, so you need to enable experimental mode.
-4. Run `docker-compose build` and then bring up the parts of the lab you want, scaling with `--scale web=X` on the end as necessary:
+3. Run `docker-compose build` and then bring up the parts of the lab you want, scaling with `--scale web=X` on the end as necessary:
    a. If you want just the linux containers, you'll need to set up the macvlan or ipvlan driver, then start with `docker-compose up`
    b. If you want to include Guacamole, then start up with `docker-compose up -f docker-compose.yml -f docker-compose.guac.yml`
    c. If you want to include Wazuh, then start up with `docker-compose up -f docker-compose.yml -f docker-compose.wazuh.yml`
    d. Note that you can do both with `docker-compose up -f docker-compose.yml -f docker-compose.guac.yml -f docker-compose.wazuh.yml`
-5. Run the post install script to install backdoors with `docker-compose exec web0 ./post_install.sh`
-6. If you're using either of the secondary services, make sure to change the default creds.
+4. Run the post install script to install backdoors with `docker-compose exec web0 ./post_install.sh`
+5. If you're using either of the secondary services, make sure to change the default creds.
    - Guacamole with guacadmin:guacadmin (can be found via http at localhost:80/guacamole)
    - Wazuh with admin:admin (via https at localhost:5601)
-7. The C2 server can be accessed via SSH at port 2222 with admin:welike2hack10!
-8. The web servers can be accessed with admin:cybersec$1, and if you're using guacamole, you'll need to set up the connections, users, etc before the start of the lab, using the fqdn for each webserver provided by docker, e.g. `linux-lab-docker_web_1.linux-lab-docker_web`
+6. The C2 server can be accessed via SSH at port 2222 with admin:welike2hack10!
+7. The web servers can be accessed with admin:cybersec$1, and if you're using guacamole, you'll need to set up the connections, users, etc before the start of the lab, using the fqdn for each webserver provided by docker, e.g. `linux-lab-docker_web_1.linux-lab-docker_web`
 
 ## Todo
 
