@@ -45,7 +45,7 @@ The general steps are below.
 3. If you don't want to use Guacamole and access the web servers directly, modify the `docker-compose.yml` file with the correct ip ranges and network drivers.
    a. For a wired connection, use the `macvlan` driver, and set the docker-compose IPAM settings to use a suitable network range.
    b. If you are on wifi, then you need to use a driver type of `ipvlan`. This is an experimental docker feature, so you need to enable experimental mode.
-4. Run `docker-compose build` and then bring up the parts of the lab you want:
+4. Run `docker-compose build` and then bring up the parts of the lab you want, scaling with `--scale web=X` on the end as necessary:
    a. If you want just the linux containers, you'll need to set up the macvlan or ipvlan driver, then start with `docker-compose up`
    b. If you want to include Guacamole, then start up with `docker-compose up -f docker-compose.yml -f docker-compose.guac.yml`
    c. If you want to include Wazuh, then start up with `docker-compose up -f docker-compose.yml -f docker-compose.wazuh.yml`
