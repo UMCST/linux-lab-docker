@@ -3,20 +3,31 @@ version: "3.7"
 services:
   guac-server:
     labels:
-      - "traefik.http.routers.guac.rule=Host(`console.{$DOMAIN}`)"
+      - "traefik.enable=true"
+      - "traefik.http.routers.guac.rule=Host(`console.${DOMAIN}`)"
       - "traefik.http.routers.guac.entrypoints=websecure"
       - "traefik.http.routers.guac.tls=true"
-      - "traefik.http.routers.guac.middlewares=redirct-guac"
-  wazuh:
+      - "traefik.http.middlewares.redirect-guac.addPrefix.prefix=/guacamole"
+      - "traefik.http.routers.guac.middlewares=redirect-guac"
+      - "traefik.http.services.guac-server.loadbalancer.server.port=8080"
+  kibana:
+    environment:
+      - SERVER_SSL_ENABLED=false
     labels:
-      - "traefik.http.routers.guac.rule=Host(`wazuh.{$DOMAIN}`)"
-      - "traefik.http.routers.guac.entrypoints=websecure"
-      - "traefik.http.routers.guac.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.wazuh.rule=Host(`wazuh.${DOMAIN}`)"
+      - "traefik.http.routers.wazuh.entrypoints=websecure"
+      - "traefik.http.routers.wazuh.tls=true"
+      - "traefik.http.services.kibana.loadbalancer.server.port=5601"
   traefik:
+    image: traefik:v2.4
     ports:
       - 80:80
       - 443:443
+    volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
     command:
+      - "--log.level=DEBUG"
         # define healthcheck
       - "--ping.entryPoint=ping"
       - "--entryPoints.ping.address=:8082"
@@ -30,5 +41,5 @@ services:
         # define permanent redirect to https
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-    labels:
-      - "traefik.http.middlewares.redirect-guac.addPrefix.prefix=/guacamole
+    networks:
+      - srv

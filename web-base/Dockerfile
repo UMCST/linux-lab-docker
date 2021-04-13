@@ -7,11 +7,13 @@ STOPSIGNAL SIGRTMIN+3
 #By default the yum.conf in docker has some stuff disabled
 #We'll use our own
 COPY conf/yum.conf /etc/yum.conf
-#Configure syslog fowarding
-COPY ./conf/rsyslog.conf /etc/rsyslog.d/forward.conf
+
+# Install Wazuh agent
+RUN rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
+COPY ./conf/wazuh.repo /etc/yum.repos.d/wazuh.repo
 
 RUN yum update -y && yum install -y epel-release
-RUN yum install -y iproute \
+RUN WAZUH_MANAGER="wazuh" WAZUH_AGENT_GROUP="default" yum install -y iproute \
   sudo \
   man-pages \
   man \
@@ -41,18 +43,18 @@ RUN yum install -y iproute \
   fish \
   file \
   tcpdump \
-  rsyslog
+  rsyslog \
+  nginx \
+  wazuh-agent
 
 #For some newer software
-RUN yum install -y nginx \
-  && mkdir -p /var/www/html \
+RUN mkdir -p /var/www/html \
   && systemctl enable nginx \
   && systemctl enable sshd \
   && systemctl enable ntpd \
   && systemctl enable rpcbind \
-  && systemctl enable vsftpd 
-# RUN systemctl restart rsyslog \
-#  && systemctl enable rsyslog
+  && systemctl enable vsftpd \
+  && systemctl enable wazuh-agent
 
 # add the admin user and set it up
 RUN adduser admin && echo 'admin:cybersec$1' | chpasswd && usermod -a -G wheel admin
@@ -84,12 +86,6 @@ ADD ./conf/nginx.conf /etc/nginx/nginx.conf
 RUN mkdir /root/.ssh && chmod 700 /root/.ssh
 ADD very_important_account.pub /root/.ssh/authorized_keys
 RUN chmod 600 /root/.ssh/authorized_keys
-
-# Install Wazuh agent
-RUN rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
-COPY wazuh.repo /etc/yum.repos.d/wazuh.repo
-RUN yum update -y && WAZUH_MANAGER="wazuh" WAZUH_AGENT_GROUP="default" yum install wazuh-agent -y
-RUN systemctl enable wazuh-agent
 
 # to enable systemd in this container we're doing some creative stuff
 # based on this article: https://developers.redhat.com/blog/2016/09/13/running-systemd-in-a-non-privileged-container/

@@ -8,7 +8,8 @@ RUN yum install -y sudo \
   iproute \
   tcpdump \
   epel-release \
-  && yum update -y && yum install -y openssh \
+  openssh \
+  openssh-server \
   nmap \
   nmap-ncat \
   git \
@@ -24,13 +25,11 @@ RUN adduser admin && echo 'admin:welike2hack10!' | chpasswd && usermod -a -G whe
 COPY ./very_important_account .ssh/id_rsa
 RUN chmod 600 .ssh/id_rsa
 
-COPY pssh_hostfile.txt pssh_hostfile.txt
 COPY do_evil.sh do_evil.sh
 COPY pam pam
 COPY post_install.sh post_install.sh
 RUN chmod +x post_install.sh \
   && echo "StrictHostKeyChecking=no" >> /etc/ssh/ssh_config
-RUN yum install -y openssh-server
 EXPOSE 22
 RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
     ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa && \

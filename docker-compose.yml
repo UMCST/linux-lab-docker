@@ -1,15 +1,17 @@
 version: "2.1"
 services:
   web0:
-    build: ./c2-docker
+    build: ./c2-base
     tty: true
     restart: always
     ports:
       - "2222:22"
     networks:
       - web
+    volumes:
+      - ./c2-base/pssh_hostfile.txt:/root/pssh_hostfile.txt
   web:
-    build: ./lab-docker
+    build: ./web-base
     restart: always
     cap_add:
       - SYS_ADMIN # for SystemD

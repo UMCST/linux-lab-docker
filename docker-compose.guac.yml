@@ -12,21 +12,12 @@ services:
       - "8080:8080"
     depends_on:
       - "guacd"
-      - "postgres"
-    env_file:
-      - .env
-    networks:
-      - srv
-  postgres:
-    image: postgres:latest
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./guac-db.sql:/docker-entrypoint-initdb.d/guac-db.sql
-    env_file:
-      - .env
     environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
+      - GUACD_HOSTNAME=guacd
+      - GUACAMOLE_HOME=/etc/guacamole
     networks:
       - srv
+    volumes:
+      - ./guacamole/user-mapping.xml:/etc/guacamole/user-mapping.xml
 volumes:
     pgdata:

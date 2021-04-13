@@ -26,7 +26,7 @@ services:
       - web
       - srv
   elasticsearch:
-    image: amazon/opendistro-for-elasticsearch:1.12.0
+    build: ./wazuh/elasticsearch/
     hostname: elasticsearch
     restart: always
     environment:
@@ -35,6 +35,8 @@ services:
       - network.host=0.0.0.0
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - bootstrap.memory_lock=true
+      - API_PASSWORD=${API_PASSWORD}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     ulimits:
       memlock:
         soft: -1
@@ -45,14 +47,14 @@ services:
     networks:
       - srv
   kibana:
-    image: wazuh/wazuh-kibana-odfe:4.1.4
+    build: ./wazuh/kibana/
     hostname: kibana
     restart: always
     ports:
       - "5601:5601"
     environment:
       - ELASTICSEARCH_USERNAME=admin
-      - ELASTICSEARCH_PASSWORD=admin
+      - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
       - SERVER_SSL_ENABLED=true
       - SERVER_SSL_CERTIFICATE=/usr/share/kibana/config/opendistroforelasticsearch.example.org.cert
       - SERVER_SSL_KEY=/usr/share/kibana/config/opendistroforelasticsearch.example.org.key

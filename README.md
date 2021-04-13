@@ -46,19 +46,13 @@ The general steps are below.
    - For a wired connection, use the `macvlan` driver, and set the docker-compose IPAM settings to use a suitable network range.
    - If you are on wifi, then you need to use a driver type of `ipvlan`. This is an experimental docker feature, so you need to enable experimental mode.
    
-3. Run `docker-compose build` and then bring up the parts of the lab you want, scaling with `--scale web=X` on the end as necessary:
+3. Copy the environment variable file to `env.example` to `.env`, and fill out the `.env` file. If you don't want any additional services, leave everything blank except for the `SCALE` variable
 
-   - If you want just the linux containers, you'll need to set up the macvlan or ipvlan driver, then start with `docker-compose up`
-   - If you want to include Guacamole, then start up with `docker-compose -f docker-compose.yml -f docker-compose.guac.yml up`
-   - If you want to include Wazuh, then start up with `docker-compose -f docker-compose.yml -f docker-compose.wazuh.yml up`
-   - Note that you can do both with `docker-compose -f docker-compose.yml -f docker-compose.guac.yml -f docker-compose.wazuh.yml up`
-   
-4. Run the post install script to install backdoors with `docker-compose exec web0 bash post_install.sh`
-5. If you're using either of the secondary services, make sure to change the default creds.
-   - Guacamole with guacadmin:guacadmin (can be found via http at localhost:8080/guacamole)
-   - Wazuh with admin:admin (via https at localhost:5601)
-6. The C2 server can be accessed via SSH at port 2222 on the host with admin:welike2hack10!
-7. The web servers can be accessed with admin:cybersec$1, and if you're using guacamole, you'll need to set up the connections, users, etc before the start of the lab, using the fqdn for each webserver provided by docker, e.g. `linux-lab-docker_web_1.linux-lab-docker_web`
+   - If you want Wazuh, set the `WAZUH` to `true`, and fill in the API, ELASTIC, KIBANA, and KIBANARO passwords. The API and kibana passwords are internal-only, but the elastic password is the `admin` password for the Wazuh, and the kibanaro password is the `kibanaro` password for the Wazuh (which has basic kibana permissions, as well as the readall permission)
+   - If you want Guacamole, set `GUAC` to `true`, and set the user password. This is the password the users will use to log into Guacamole (with username `userX`, where X is their instance number)
+   - If you want to use the Traefik proxy, set `TRAEFIK` to true, and set the domain to whatever your base domain to be. The Traefik proxy is pre-configured to use subdomains "wazuh" and "console" off of this domain, though by default it does not try to use Let's Encrypt for it's HTTPS certificate.  
+
+4. The `compose.sh` script handles scaling for you via the `SCALE` variable in the environment file, but otherwise can be treated similarly to the docker-compose - to bring the stack up, simply run `./compose.sh up --build -d`. After it builds, initializes, and exits, the various components can be accessed at their corresponding ports (5601 for wazuh, over https, and port 8080 for guacamole over http, at path /guacamole), or via the proxy if enabled (at wazuh.DOMAIN or console.DOMAIN)
 
 ## Todo
 

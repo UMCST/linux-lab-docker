@@ -1,0 +1,19 @@
+<user-mapping>
+     
+    <authorize username="user1" password="guacamole420chips!">
+        <connection name="web1">
+        <protocol>ssh</protocol>
+            <param name="hostname">linux-lab-docker_web_1.linux-lab-docker_web</param>
+            <param name="port">22</param>
+        </connection>
+    </authorize>
+    <authorize username="admin" password="welike2hack10!">
+        <connection name="web0">
+        <protocol>ssh</protocol>
+            <param name="hostname">linux-lab-docker_web0_1.linux-lab-docker_web</param>
+            <param name="port">22</param>
+            <param name="username">admin</param>
+            <param name="password">welike2hack10!</param>
+        </connection>
+    </authorize>
+</user-mapping>
