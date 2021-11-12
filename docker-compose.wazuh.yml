@@ -8,7 +8,7 @@ services:
     environment:
       - ELASTICSEARCH_URL=https://elasticsearch:9200
       - ELASTIC_USERNAME=admin
-      - ELASTIC_PASSWORD=admin
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - FILEBEAT_SSL_VERIFICATION_MODE=none
     volumes:
       - ossec_api_configuration:/var/ossec/api/configuration
