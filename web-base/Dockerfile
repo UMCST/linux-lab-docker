@@ -45,7 +45,7 @@ RUN WAZUH_MANAGER="wazuh" WAZUH_AGENT_GROUP="default" yum install -y iproute \
   tcpdump \
   rsyslog \
   nginx \
-  wazuh-agent
+  wazuh-agent-4.1.4
 
 #For some newer software
 RUN mkdir -p /var/www/html \
