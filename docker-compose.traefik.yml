@@ -10,15 +10,6 @@ services:
       - "traefik.http.middlewares.redirect-guac.addPrefix.prefix=/guacamole"
       - "traefik.http.routers.guac.middlewares=redirect-guac"
       - "traefik.http.services.guac-server.loadbalancer.server.port=8080"
-  kibana:
-    environment:
-      - SERVER_SSL_ENABLED=false
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.wazuh.rule=Host(`wazuh.${DOMAIN}`)"
-      - "traefik.http.routers.wazuh.entrypoints=websecure"
-      - "traefik.http.routers.wazuh.tls=true"
-      - "traefik.http.services.kibana.loadbalancer.server.port=5601"
   traefik:
     image: traefik:v2.4
     ports:

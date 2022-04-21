@@ -18,11 +18,13 @@ RUN yum install -y sudo \
   fish \
   vim \
   pam-devel \
+  sshpass \
   && pip install pssh
 
 WORKDIR /root
 RUN adduser admin && echo 'admin:welike2hack10!' | chpasswd && usermod -a -G wheel admin
 COPY ./very_important_account .ssh/id_rsa
+COPY ./pssh_hostfile.txt /home/admin/pssh_hostfile.txt
 RUN chmod 600 .ssh/id_rsa
 
 COPY do_evil.sh do_evil.sh
