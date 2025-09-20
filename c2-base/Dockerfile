@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM rockylinux/rockylinux:9-ubi-init
 RUN yum update -y && yum install -y epel-release
 RUN yum install -y sudo \
   man-pages \
@@ -19,7 +19,8 @@ RUN yum install -y sudo \
   vim \
   pam-devel \
   sshpass \
-  && pip install pssh
+  pssh 
+RUN ln -s /usr/bin/pscp.pssh /usr/local/bin/pscp
 
 WORKDIR /root
 RUN adduser admin && echo 'admin:welike2hack10!' | chpasswd && usermod -a -G wheel admin

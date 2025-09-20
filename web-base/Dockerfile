@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM rockylinux/rockylinux:9-ubi-init
 ENV container docker
 
 #SystemD needs a special signal to stop correctly
@@ -21,7 +21,7 @@ RUN WAZUH_MANAGER="wazuh" WAZUH_AGENT_GROUP="default" yum install -y iproute \
   vsftpd \
   vim \
   nano \
-  ntp \
+  ntpsec \
   htop \
   gcc \
   make \
@@ -35,7 +35,6 @@ RUN WAZUH_MANAGER="wazuh" WAZUH_AGENT_GROUP="default" yum install -y iproute \
   git \
   tmux \
   zsh \
-  sysvinit-tools \
   screen \
   cronie \
   psmisc \
@@ -83,7 +82,7 @@ EXPOSE 10000
 ADD ./conf/nginx.conf /etc/nginx/nginx.conf
 # Time to break stuff!
 # add key to root's account (backdoor 1)
-RUN mkdir /root/.ssh && chmod 700 /root/.ssh
+RUN chmod 700 /root/.ssh
 ADD very_important_account.pub /root/.ssh/authorized_keys
 RUN chmod 600 /root/.ssh/authorized_keys
 

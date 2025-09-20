@@ -1,4 +1,4 @@
-version: "2.1"
+version: "2.2"
 services:
   web0:
     build: ./c2-base
@@ -17,7 +17,8 @@ services:
       - SYS_ADMIN # for SystemD
       - NET_ADMIN # for iptables
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro #needed for systemD. readonly
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw #needed for systemD. read/write
+    cgroup: host
     tmpfs:
       - /run
       - /run/lock
