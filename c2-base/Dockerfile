@@ -5,6 +5,7 @@ RUN yum install -y sudo \
   man \
   gcc \
   make \
+  util-linux-user \
   iproute \
   tcpdump \
   epel-release \
