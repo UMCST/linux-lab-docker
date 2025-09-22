@@ -1,2 +1,4 @@
 
-linux-lab-docker_web_1.linux-lab-docker_web
+linux-lab-docker-web-1
+linux-lab-docker-web-2
+linux-lab-docker-web-3
