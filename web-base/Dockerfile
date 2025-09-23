@@ -18,6 +18,7 @@ RUN WAZUH_MANAGER="wazuh" WAZUH_AGENT_GROUP="default" yum install -y iproute \
   man-pages \
   man \
   util-linux-user \
+  iputils \
   ftp \
   vsftpd \
   vim \
